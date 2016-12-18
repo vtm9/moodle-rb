@@ -2,12 +2,12 @@ require 'logger'
 
 module MoodleRb
   def self.new(token, url, logger = nil)
-    @@logger = logger || ::Logger.new(STDOUT)
+    @logger = logger || ::Logger.new(STDOUT)
     Client.new(token, url)
   end
 
   def self.logger
-    @@logger
+    @logger
   end
 end
 require 'httparty'
