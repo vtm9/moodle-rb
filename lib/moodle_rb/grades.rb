@@ -13,11 +13,9 @@ module MoodleRb
     def by_assignment(assignment_id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('mod_assign_get_grades', token),
-          :body => {
-            :assignmentids => api_array(assignment_id)
-          }
+        query: query_hash('mod_assign_get_grades', token),
+        body: {
+          assignmentids: api_array(assignment_id)
         }
       )
       check_for_errors(response)
@@ -27,12 +25,10 @@ module MoodleRb
     def by_course(course_id, *user_ids)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_grades_get_grades', token),
-          :body => {
-            :courseid => course_id,
-            :userids => api_array(user_ids)
-          }
+        query: query_hash('core_grades_get_grades', token),
+        body: {
+          courseid: course_id,
+          userids: api_array(user_ids)
         }
       )
       check_for_errors(response)

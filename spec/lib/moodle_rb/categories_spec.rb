@@ -5,8 +5,8 @@ describe MoodleRb::Categories do
   let(:token) { ENV['MOODLE_TOKEN'] || '' }
   let(:category_moodle_rb) { MoodleRb.new(token, url).categories }
 
-  describe '#index', :vcr => {
-    :match_requests_on => [:body, :headers], :record => :once
+  describe '#index', vcr: {
+    match_requests_on: [:body, :headers], record: :once
   } do
     let(:result) { category_moodle_rb.index }
 
@@ -18,7 +18,7 @@ describe MoodleRb::Categories do
     context 'when using invalid token' do
       let(:token) { '' }
       specify do
-        expect{ category_moodle_rb.index }.to raise_error(
+        expect { category_moodle_rb.index }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'
         )
@@ -26,12 +26,12 @@ describe MoodleRb::Categories do
     end
   end
 
-  describe '#create', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#create', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     let(:params) do
       {
-        :name => 'Test category'
+        name: 'Test category'
       }
     end
     let(:result) { category_moodle_rb.create(params) }
@@ -45,13 +45,13 @@ describe MoodleRb::Categories do
     context 'when validation fails' do
       let(:params) do
         {
-          :name => 'Test category',
-          :idnumber => 'CAT101'
+          name: 'Test category',
+          idnumber: 'CAT101'
         }
       end
 
       specify do
-        expect{ result }.to raise_error(
+        expect { result }.to raise_error(
           MoodleRb::MoodleError,
           'ID number is already used for another category'
         )
@@ -59,8 +59,8 @@ describe MoodleRb::Categories do
     end
   end
 
-  describe '#show', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#show', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     let(:id) { 1 }
     let(:result) { category_moodle_rb.show(id) }
@@ -73,7 +73,7 @@ describe MoodleRb::Categories do
     context 'when using invalid token' do
       let(:token) { '' }
       specify do
-        expect{ category_moodle_rb.show(id) }.to raise_error(
+        expect { category_moodle_rb.show(id) }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'
         )
@@ -81,11 +81,11 @@ describe MoodleRb::Categories do
     end
   end
 
-  describe '#destroy', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#destroy', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     context 'when using valid token' do
-      let!(:id) { category_moodle_rb.create(:name => '_')['id'] }
+      let!(:id) { category_moodle_rb.create(name: '_')['id'] }
       let(:result) { category_moodle_rb.destroy(id) }
 
       specify do
@@ -96,7 +96,7 @@ describe MoodleRb::Categories do
     context 'when using invalid token' do
       let(:token) { '' }
       specify do
-        expect{ category_moodle_rb.destroy(0) }.to raise_error(
+        expect { category_moodle_rb.destroy(0) }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'
         )

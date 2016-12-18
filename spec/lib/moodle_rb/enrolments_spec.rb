@@ -5,13 +5,13 @@ describe MoodleRb::Enrolments do
   let(:token) { ENV['MOODLE_TOKEN'] || '' }
   let(:enrolment_moodle_rb) { MoodleRb.new(token, url).enrolments }
 
-  describe '#create', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#create', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     let(:params) do
       {
-        :user_id => 3,
-        :course_id => 8
+        user_id: 3,
+        course_id: 8
       }
     end
     let(:result) { enrolment_moodle_rb.create(params) }
@@ -23,13 +23,13 @@ describe MoodleRb::Enrolments do
     context 'when user or course id is invalid' do
       let(:params) do
         {
-          :user_id => 9999,
-          :course_id => 9999
+          user_id: 9999,
+          course_id: 9999
         }
       end
 
       specify do
-        expect{ result }.to raise_error(
+        expect { result }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid parameter value detected'
         )

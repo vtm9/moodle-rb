@@ -5,8 +5,8 @@ describe MoodleRb::Client do
   let(:token) { ENV['MOODLE_TOKEN'] || '' }
   let(:moodle_rb) { MoodleRb.new(token, url) }
 
-  describe '#site_info', :vcr => {
-    :match_requests_on => [:body, :headers], :record => :once
+  describe '#site_info', vcr: {
+    match_requests_on: [:body, :headers], record: :once
   } do
     let(:result) { moodle_rb.site_info }
 
@@ -14,7 +14,7 @@ describe MoodleRb::Client do
       let(:token) { 'invalid_moodle_rb_token' }
 
       specify do
-        expect{ result }.to raise_error(
+        expect { result }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'
         )

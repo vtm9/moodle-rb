@@ -4,7 +4,7 @@ Bundler.require(:default, :development)
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
-  config.filter_run_excluding :perf => true
+  config.filter_run_excluding perf: true
   config.order = 'random'
 end
 

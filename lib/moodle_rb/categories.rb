@@ -14,9 +14,7 @@ module MoodleRb
     def index
       response = self.class.get(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_course_get_categories', token)
-        }
+        query: query_hash('core_course_get_categories', token)
       )
       check_for_errors(response)
       response.parsed_response
@@ -35,16 +33,14 @@ module MoodleRb
     def create(params)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_course_create_categories', token),
-          :body => {
-            :categories => {
-              '0' => {
-                :name => params[:name],
-                :parent => (params[:parent_category] || ROOT_CATEGORY),
-                :idnumber => params[:idnumber],
-                :description => params[:description]
-              }
+        query: query_hash('core_course_create_categories', token),
+        body: {
+          categories: {
+            '0' => {
+              name: params[:name],
+              parent: (params[:parent_category] || ROOT_CATEGORY),
+              idnumber: params[:idnumber],
+              description: params[:description]
             }
           }
         }
@@ -56,14 +52,12 @@ module MoodleRb
     def show(id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_course_get_categories', token),
-          :body => {
-            :criteria => {
-              '0' => {
-                :key => 'id',
-                :value => id
-              }
+        query: query_hash('core_course_get_categories', token),
+        body: {
+          criteria: {
+            '0' => {
+              key: 'id',
+              value: id
             }
           }
         }
@@ -75,14 +69,12 @@ module MoodleRb
     def destroy(id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_course_delete_categories', token),
-          :body => {
-            :categories => {
-              '0' => {
-                :id => id,
-                :recursive => 1
-              }
+        query: query_hash('core_course_delete_categories', token),
+        body: {
+          categories: {
+            '0' => {
+              id: id,
+              recursive: 1
             }
           }
         }

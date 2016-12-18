@@ -3,6 +3,7 @@ module MoodleRb
     include HTTParty
     include Utility
 
+    debug_output MoodleRb.logger
     attr_reader :token
 
     def initialize(token, url)
@@ -18,12 +19,10 @@ module MoodleRb
     def create(params)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_user_create_users', token),
-          :body => {
-            :users => {
-              '0' => params
-            }
+        query: query_hash('core_user_create_users', token),
+        body: {
+          users: {
+            '0' => params
           }
         }
       )
@@ -34,14 +33,12 @@ module MoodleRb
     def show(id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_user_get_users', token),
-          :body => {
-            :criteria => {
-              '0' => {
-                :key => 'id',
-                :value => id
-              }
+        query: query_hash('core_user_get_users', token),
+        body: {
+          criteria: {
+            '0' => {
+              key: 'id',
+              value: id
             }
           }
         }
@@ -54,12 +51,10 @@ module MoodleRb
     def destroy(id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_user_delete_users', token),
-          :body => {
-            :userids => {
-              '0' => id
-            }
+        query: query_hash('core_user_delete_users', token),
+        body: {
+          userids: {
+            '0' => id
           }
         }
       )
@@ -70,11 +65,9 @@ module MoodleRb
     def enrolled_courses(user_id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_enrol_get_users_courses', token),
-          :body => {
-            :userid => user_id
-          }
+        query: query_hash('core_enrol_get_users_courses', token),
+        body: {
+          userid: user_id
         }
       )
       check_for_errors(response)
@@ -86,11 +79,9 @@ module MoodleRb
     def search(params = {})
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_user_get_users', token),
-          :body => {
-            :criteria => key_value_query_format(params)
-          }
+        query: query_hash('core_user_get_users', token),
+        body: {
+          criteria: key_value_query_format(params)
         }
       )
       check_for_errors(response)
@@ -103,12 +94,10 @@ module MoodleRb
     def update(params)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_user_update_users', token),
-          :body => {
-            :users => {
-              '0' => params
-            }
+        query: query_hash('core_user_update_users', token),
+        body: {
+          users: {
+            '0' => params
           }
         }
       )

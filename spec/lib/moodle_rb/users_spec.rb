@@ -5,17 +5,17 @@ describe MoodleRb::Users do
   let(:token) { ENV['MOODLE_TOKEN'] || '' }
   let(:user_moodle_rb) { MoodleRb.new(token, url).users }
 
-  describe '#create', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#create', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     let(:params) do
       {
-        :username => 'testuser1',
-        :password => 'Password123!',
-        :firstname => 'Austin',
-        :lastname => 'Powers',
-        :email => 'austinp1@jobready.com.au',
-        :idnumber => 'PAUST002'
+        username: 'testuser1',
+        password: 'Password123!',
+        firstname: 'Austin',
+        lastname: 'Powers',
+        email: 'austinp1@jobready.com.au',
+        idnumber: 'PAUST002'
       }
     end
     let(:result) { user_moodle_rb.create(params) }
@@ -29,12 +29,12 @@ describe MoodleRb::Users do
     context 'when missing required parameters' do
       let(:params) do
         {
-          :username => 'testuser1'
+          username: 'testuser1'
         }
       end
 
       specify do
-        expect{ result }.to raise_error(
+        expect { result }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid parameter value detected'
         )
@@ -42,8 +42,8 @@ describe MoodleRb::Users do
     end
   end
 
-  describe '#show', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#show', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     let(:id) { 5 }
     let(:result) { user_moodle_rb.show(id) }
@@ -56,7 +56,7 @@ describe MoodleRb::Users do
     context 'when using invalid token' do
       let(:token) { '' }
       specify do
-        expect{ user_moodle_rb.show(id) }.to raise_error(
+        expect { user_moodle_rb.show(id) }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'
         )
@@ -64,8 +64,8 @@ describe MoodleRb::Users do
     end
   end
 
-  describe '#destroy', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#destroy', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     let(:id) { 5 }
     let(:result) { user_moodle_rb.destroy(id) }
@@ -77,7 +77,7 @@ describe MoodleRb::Users do
     context 'when id does not exist' do
       let(:id) { 999 }
       specify do
-        expect{ result }.to raise_error(
+        expect { result }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid user'
         )
@@ -87,7 +87,7 @@ describe MoodleRb::Users do
     context 'when using invalid token' do
       let(:token) { '' }
       specify do
-        expect{ user_moodle_rb.destroy(-1) }.to raise_error(
+        expect { user_moodle_rb.destroy(-1) }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'
         )
@@ -95,8 +95,8 @@ describe MoodleRb::Users do
     end
   end
 
-  describe '#enrolled_courses', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#enrolled_courses', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     let(:user_id) { 3 }
     let(:result) { user_moodle_rb.enrolled_courses(user_id) }
@@ -110,7 +110,7 @@ describe MoodleRb::Users do
     context 'when using invalid token' do
       let(:token) { '' }
       specify do
-        expect{ user_moodle_rb.enrolled_courses(user_id) }.to raise_error(
+        expect { user_moodle_rb.enrolled_courses(user_id) }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'
         )
@@ -118,10 +118,10 @@ describe MoodleRb::Users do
     end
   end
 
-  describe '#search', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#search', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
-    let(:results) { user_moodle_rb.search({ :firstname => 'Guest%' }) }
+    let(:results) { user_moodle_rb.search(firstname: 'Guest%') }
 
     specify do
       expect(results).to be_a Array
@@ -132,7 +132,7 @@ describe MoodleRb::Users do
     context 'when using invalid token' do
       let(:token) { '' }
       specify do
-        expect{ user_moodle_rb.search({ :firstname => '%' }) }.to raise_error(
+        expect { user_moodle_rb.search(firstname: '%') }.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'
         )
@@ -140,12 +140,12 @@ describe MoodleRb::Users do
     end
   end
 
-  describe '#update', :vcr => {
-    :match_requests_on => [:headers], :record => :once
+  describe '#update', vcr: {
+    match_requests_on: [:headers], record: :once
   } do
     let(:user_id) { 4 }
     let(:result) do
-      user_moodle_rb.update(:id => user_id, :email => 'samg@jobready.com.au')
+      user_moodle_rb.update(id: user_id, email: 'samg@jobready.com.au')
     end
 
     specify do
@@ -156,7 +156,7 @@ describe MoodleRb::Users do
       let(:token) { '' }
       specify do
         expect do
-          user_moodle_rb.update(:id => user_id, :email => '')
+          user_moodle_rb.update(id: user_id, email: '')
         end.to raise_error(
           MoodleRb::MoodleError,
           'Invalid token - token not found'

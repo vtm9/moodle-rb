@@ -13,9 +13,7 @@ module MoodleRb
     def index
       response = self.class.get(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_course_get_courses', token)
-        }
+        query: query_hash('core_course_get_courses', token)
       )
       check_for_errors(response)
       response.parsed_response
@@ -33,16 +31,14 @@ module MoodleRb
     def create(params)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_course_create_courses', token),
-          :body => {
-            :courses => {
-              '0' => {
-                :fullname => params[:full_name],
-                :shortname => params[:short_name],
-                :categoryid => params[:parent_category],
-                :idnumber => params[:idnumber]
-              }
+        query: query_hash('core_course_create_courses', token),
+        body: {
+          courses: {
+            '0' => {
+              fullname: params[:full_name],
+              shortname: params[:short_name],
+              categoryid: params[:parent_category],
+              idnumber: params[:idnumber]
             }
           }
         }
@@ -54,13 +50,11 @@ module MoodleRb
     def show(id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_course_get_courses', token),
-          :body => {
-            :options => {
-              :ids => {
-                '0' => id
-              }
+        query: query_hash('core_course_get_courses', token),
+        body: {
+          options: {
+            ids: {
+              '0' => id
             }
           }
         }
@@ -72,12 +66,10 @@ module MoodleRb
     def destroy(id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_course_delete_courses', token),
-          :body => {
-            :courseids => {
-              '0' => id
-            }
+        query: query_hash('core_course_delete_courses', token),
+        body: {
+          courseids: {
+            '0' => id
           }
         }
       )
@@ -88,11 +80,9 @@ module MoodleRb
     def enrolled_users(course_id)
       response = self.class.post(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_enrol_get_enrolled_users', token),
-          :body => {
-            :courseid => course_id
-          }
+        query: query_hash('core_enrol_get_enrolled_users', token),
+        body: {
+          courseid: course_id
         }
       )
       check_for_errors(response)

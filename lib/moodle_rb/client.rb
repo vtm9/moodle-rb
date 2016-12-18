@@ -3,6 +3,7 @@ module MoodleRb
     include HTTParty
     include Utility
 
+    debug_output MoodleRb.logger
     attr_reader :token, :url
 
     def initialize(token, url)
@@ -14,9 +15,7 @@ module MoodleRb
     def site_info
       response = self.class.get(
         '/webservice/rest/server.php',
-        {
-          :query => query_hash('core_webservice_get_site_info', token)
-        }
+        query: query_hash('core_webservice_get_site_info', token)
       )
       check_for_errors(response)
       response.parsed_response

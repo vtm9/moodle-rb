@@ -8,9 +8,15 @@ require 'moodle_rb/categories'
 require 'moodle_rb/enrolments'
 require 'moodle_rb/grades'
 require 'moodle_rb/users'
+require 'logger'
 
 module MoodleRb
-  def self.new(token, url)
+  def self.new(token, url, logger = nil)
+    @@logger = logger || ::Logger.new(STDOUT)
     Client.new(token, url)
+  end
+
+  def self.logger
+    @@logger
   end
 end

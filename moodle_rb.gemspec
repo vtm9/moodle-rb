@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = MoodleRb::VERSION
   spec.authors       = ['Sam Giffney']
   spec.email         = ['samg@jobready.com.au']
-  spec.summary       = %q{ A Ruby client for the Moodle API }
+  spec.summary       = ' A Ruby client for the Moodle API '
   spec.homepage      = 'https://github.com/jobready/moodle-rb'
   spec.license       = 'MIT'
 

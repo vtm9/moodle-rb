@@ -2,9 +2,9 @@ module MoodleRb
   module Utility
     def query_hash(function, token)
       {
-        :wsfunction => function,
-        :moodlewsrestformat => 'json',
-        :wstoken => token
+        wsfunction: function,
+        moodlewsrestformat: 'json',
+        wstoken: token
       }
     end
 
@@ -29,14 +29,14 @@ module MoodleRb
 
     def check_for_errors(response)
       return unless error_response?(response)
-      raise MoodleError.new(response.parsed_response)
+      raise MoodleError, response.parsed_response
     end
 
     private
 
     def error_response?(response)
       response && response.parsed_response.is_a?(Hash) &&
-        response.parsed_response.has_key?('exception')
+        response.parsed_response.key?('exception')
     end
   end
 end
